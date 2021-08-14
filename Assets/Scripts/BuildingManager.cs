@@ -29,7 +29,10 @@ public class BuildingManager : MonoBehaviour {
 
     private void Start() {
         mainCamera = Camera.main;
+        hqBuilding.gameObject.GetComponent<HealthSystem>().OnDied += HQ_OnDied;
     }
+
+    
 
     /************************ LOOPING ************************/
     private void Update() {
@@ -58,7 +61,9 @@ public class BuildingManager : MonoBehaviour {
 
     /************************ METHODS ************************/
 
-    
+    private void HQ_OnDied(object sender, EventArgs e) {
+        GameOverUI.Instance.Show();
+    }
 
     public void SetActiveBuildingType(BuildingTypeSO buildingType) {
         activeBuildingType = buildingType;

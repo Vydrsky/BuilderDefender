@@ -6,6 +6,7 @@ public class EnemyWaveManager : MonoBehaviour {
 
     /************************ FIELDS ************************/
 
+    public static EnemyWaveManager Instance { get; private set; }
     public event EventHandler OnWaveNumberChanged;
 
     private enum State {
@@ -23,6 +24,7 @@ public class EnemyWaveManager : MonoBehaviour {
 
     /************************ INITIALIZE ************************/
     private void Awake() {
+        Instance = this;
         waveNumber = 0;
     }
 

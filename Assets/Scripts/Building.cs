@@ -6,11 +6,14 @@ public class Building : MonoBehaviour {
     private HealthSystem healthSystem;
     private BuildingTypeSO buildingType;
     private Transform buildingDemolishButton;
+    private Transform buildingRepairButton;
 
     /************************ INITIALIZE ************************/
     private void Awake() {
         buildingDemolishButton = transform.Find("pfBuildingDemolishUI");
+        buildingRepairButton = transform.Find("pfBuildingRepairUI");
         HideBuildingDemolishButton();
+        HideBuildingRepairButton();
     }
 
     private void Start() {
@@ -18,6 +21,8 @@ public class Building : MonoBehaviour {
         healthSystem = GetComponent<HealthSystem>();
         healthSystem.SetHealthAmountMax(buildingType.healthAmountMax,true);
         healthSystem.OnDied += HealthSystem_OnDied;
+        healthSystem.OnDamaged += HealthSystem_OnDamaged;
+        healthSystem.OnDamaged += HealthSystem_OnHealed;
     }
 
     
@@ -31,6 +36,16 @@ public class Building : MonoBehaviour {
 
     private void HealthSystem_OnDied(object sender, System.EventArgs e) {
         Destroy(gameObject);
+    }
+
+    private void HealthSystem_OnDamaged(object sender, System.EventArgs e) {
+        ShowBuildingRepairButton();
+    }
+
+    private void HealthSystem_OnHealed(object sender, System.EventArgs e) {
+        if (healthSystem.isFullHealth()) {
+            HideBuildingRepairButton();
+        }
     }
 
     private void OnMouseEnter() {
@@ -49,5 +64,15 @@ public class Building : MonoBehaviour {
     private void HideBuildingDemolishButton() {
         if (buildingDemolishButton != null)
             buildingDemolishButton.gameObject.SetActive(false);
+    }
+
+    private void ShowBuildingRepairButton() {
+        if (buildingRepairButton != null)
+            buildingRepairButton.gameObject.SetActive(true);
+    }
+
+    private void HideBuildingRepairButton() {
+        if (buildingRepairButton != null)
+            buildingRepairButton.gameObject.SetActive(false);
     }
 }

@@ -15,9 +15,8 @@ public class HealthBar : MonoBehaviour {
     private void Start() {
         UpdateBarVisible();
         healthSystem.OnDamaged += HealthSystem_OnDamaged;
+        healthSystem.OnHealed += HealthSystem_OnHealed;
     }
-
-    
 
     /************************ LOOPING ************************/
     private void Update() {
@@ -30,6 +29,12 @@ public class HealthBar : MonoBehaviour {
         UpdateBarVisible();
         UpdateBar();
     }
+
+    private void HealthSystem_OnHealed(object sender, System.EventArgs e) {
+        UpdateBarVisible();
+        UpdateBar();
+    }
+
     private void UpdateBar() {
         barTransform.localScale = new Vector3(healthSystem.GetHealthAmountNormalized(), 1, 1);
     }
