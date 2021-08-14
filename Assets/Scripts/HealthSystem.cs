@@ -7,6 +7,7 @@ public class HealthSystem : MonoBehaviour {
     public event EventHandler OnDamaged;
     public event EventHandler OnDied;
     public event EventHandler OnHealed;
+    public event EventHandler OnHealthAmountMaxChanged;
     private int healthAmount;
     [SerializeField]
     private int healthAmountMax;
@@ -72,5 +73,6 @@ public class HealthSystem : MonoBehaviour {
         if (updateHealthAmount) {
             healthAmount = healthAmountMax;
         }
+        OnHealthAmountMaxChanged?.Invoke(this, EventArgs.Empty);
     }
 }
