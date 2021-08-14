@@ -35,11 +35,13 @@ public class Building : MonoBehaviour {
     /************************ METHODS ************************/
 
     private void HealthSystem_OnDied(object sender, System.EventArgs e) {
+        SoundManager.Instance.PlaySound(SoundManager.Sound.BuildingDestroyed);
         Destroy(gameObject);
     }
 
     private void HealthSystem_OnDamaged(object sender, System.EventArgs e) {
         ShowBuildingRepairButton();
+        SoundManager.Instance.PlaySound(SoundManager.Sound.BuildingDamaged);
     }
 
     private void HealthSystem_OnHealed(object sender, System.EventArgs e) {
