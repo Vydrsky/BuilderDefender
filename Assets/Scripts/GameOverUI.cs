@@ -12,6 +12,7 @@ public class GameOverUI : MonoBehaviour {
     private void Awake() {
         Instance = this;
         transform.Find("retryButton").GetComponent<Button>().onClick.AddListener(() => {
+            Time.timeScale = 1f;
             GameSceneManager.Load(GameSceneManager.Scene.GameScene);
         });
         transform.Find("mainMenuButton").GetComponent<Button>().onClick.AddListener(() => {
@@ -33,7 +34,7 @@ public class GameOverUI : MonoBehaviour {
 
     public void Show() {
         gameObject.SetActive(true);
-
+        Time.timeScale = 0f;
         transform.Find("youSurvivedText").GetComponent<TextMeshProUGUI>().SetText("You Survived " + EnemyWaveManager.Instance.GetWaveNumber() + " Waves!");
     }
 

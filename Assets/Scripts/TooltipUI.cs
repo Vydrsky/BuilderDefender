@@ -43,7 +43,6 @@ public class TooltipUI : MonoBehaviour {
 
     private void HandleFollowMouse() {
         Vector2 anchoredPosition = Input.mousePosition / canvasRectTransform.localScale.x;
-        Debug.Log(rectTransform.anchoredPosition);
         if (anchoredPosition.x + backgroundRectTransform.rect.width > canvasRectTransform.rect.width) {
             anchoredPosition.x = canvasRectTransform.rect.width - backgroundRectTransform.rect.width;
         }

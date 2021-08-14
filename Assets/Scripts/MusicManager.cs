@@ -1,33 +1,19 @@
 using UnityEngine;
-using System.Collections.Generic;
 
-public class SoundManager : MonoBehaviour {
+public class MusicManager : MonoBehaviour {
 
     /************************ FIELDS ************************/
-    public static SoundManager Instance;
+    public static MusicManager Instance;
 
     private float volume = 0.5f;
-    public enum Sound {
-        BuildingPlaced,
-        BuildingDamaged,
-        BuildingDestroyed,
-        EnemyDie,
-        EnemyHit,
-        GameOver,
-    }
-
     private AudioSource audioSource;
-    private Dictionary<Sound, AudioClip> audioClipDictionary;
     
     /************************ INITIALIZE ************************/
-    private void Awake() { 
-        
+    private void Awake() {
         Instance = this;
+
         audioSource = GetComponent<AudioSource>();
-        audioClipDictionary = new Dictionary<Sound, AudioClip>();
-        foreach (Sound sound in System.Enum.GetValues(typeof(Sound))) {
-            audioClipDictionary[sound] = Resources.Load<AudioClip>(sound.ToString());
-        }
+        audioSource.volume = volume;
     }
 
     private void Start() {
@@ -41,21 +27,16 @@ public class SoundManager : MonoBehaviour {
 
     /************************ METHODS ************************/
 
-
-    public void PlaySound(Sound sound) {
-        audioSource.PlayOneShot(audioClipDictionary[sound],volume);
-    }
-
     public void IncreaseVolume(float amount) {
         volume += amount;
         volume = Mathf.Clamp01(volume);
+        audioSource.volume = volume;
     }
 
     public void DecreaseVolume(float amount) {
         volume -= amount;
-        if (volume < 0.05f)
-            volume = 0;
         volume = Mathf.Clamp01(volume);
+        audioSource.volume = volume;
     }
 
     public float GetVolume() {
