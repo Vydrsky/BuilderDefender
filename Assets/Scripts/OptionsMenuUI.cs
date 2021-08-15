@@ -9,6 +9,7 @@ public class OptionsMenuUI : MonoBehaviour {
     private TextMeshProUGUI soundVolumeText;
     private TextMeshProUGUI musicVolumeText;
     
+    
     /************************ INITIALIZE ************************/
     private void Awake() {
 
@@ -36,11 +37,19 @@ public class OptionsMenuUI : MonoBehaviour {
         transform.Find("mainMenuButton").GetComponent<Button>().onClick.AddListener(() => {
             GameSceneManager.Load(GameSceneManager.Scene.MainMenuScene);
         });
+
+        transform.Find("edgeScrollingToggle").GetComponent<Toggle>().onValueChanged.AddListener((bool set) => {
+            CameraHandler.Instance.EdgeScrolling = set;
+        });
+
+        
     }
 
     private void Start() {
         gameObject.SetActive(false);
         UpdateText();
+
+        transform.Find("edgeScrollingToggle").GetComponent<Toggle>().SetIsOnWithoutNotify(CameraHandler.Instance.EdgeScrolling);
     }
 
     /************************ LOOPING ************************/
@@ -68,4 +77,6 @@ public class OptionsMenuUI : MonoBehaviour {
             Time.timeScale = 1f;
         }
     }
+
+    
 }

@@ -36,11 +36,15 @@ public class Enemy : MonoBehaviour {
 
     private void HealthSystem_OnDied(object sender, System.EventArgs e) {
         SoundManager.Instance.PlaySound(SoundManager.Sound.EnemyDie);
+        Instantiate(Resources.Load<Transform>("pfEnemyDieParticles"),transform.position,Quaternion.identity);
+        CinemachineShake.Instance.ShakeCamera(5f, 0.08f);
         Destroy(gameObject);
     }
 
     private void HealthSystem_OnDamaged(object sender, System.EventArgs e) {
         SoundManager.Instance.PlaySound(SoundManager.Sound.EnemyHit);
+        CinemachineShake.Instance.ShakeCamera(5f,0.05f);
+        ChromaticAbberationEffect.Instance.SetWeight(0.5f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -48,7 +52,7 @@ public class Enemy : MonoBehaviour {
         if(building != null) {
             HealthSystem healthSystem = building.GetComponent<HealthSystem>();
             healthSystem.Damage(10);
-            Destroy(gameObject);
+            this.healthSystem.Damage(9999);
         }
     }
 
@@ -71,7 +75,7 @@ public class Enemy : MonoBehaviour {
     private void HandleMovement() {
         if (targetTransform != null) {
             Vector3 moveDir = (targetTransform.position - transform.position).normalized;
-            float moveSpeed = 6f;
+            float moveSpeed = 5f;
             rb.velocity = moveDir * moveSpeed;
         }
         else {

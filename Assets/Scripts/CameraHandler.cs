@@ -4,13 +4,26 @@ using Cinemachine;
 public class CameraHandler : MonoBehaviour {
 
     /************************ FIELDS ************************/
+    public static CameraHandler Instance { get; private set; }
+    public bool EdgeScrolling { 
+        get => edgeScrolling; 
+        set { 
+            edgeScrolling = value;
+            PlayerPrefs.SetInt("edgeScrolling", edgeScrolling ? 1 : 0);
+        } 
+    }
+
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
+    [SerializeField] private PolygonCollider2D mapCollider;
     private float orthographicSize;
     private float targetOrthographicSize;
-    
+    private bool edgeScrolling;
+
     /************************ INITIALIZE ************************/
     private void Awake() {
-        
+        Instance = this;
+
+        edgeScrolling = PlayerPrefs.GetInt("edgeScrolling",1) == 1;
     }
 
     private void Start() {
@@ -22,6 +35,10 @@ public class CameraHandler : MonoBehaviour {
     private void Update() {
         HandleMovement();
         HandleZoom();
+
+        Debug.Log(mapCollider.bounds.min.x + orthographicSize / 2);
+
+        
     }
 
     /************************ METHODS ************************/
@@ -30,10 +47,32 @@ public class CameraHandler : MonoBehaviour {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
+        if (EdgeScrolling) {
+            float edgeScrollingSize = 30;
+            if (Input.mousePosition.x > Screen.width - edgeScrollingSize) {
+                x = 1f;
+            }
+            if (Input.mousePosition.x < edgeScrollingSize) {
+                x = -1f;
+            }
+            if (Input.mousePosition.y > Screen.height - edgeScrollingSize) {
+                y = 1f;
+            }
+            if (Input.mousePosition.y < edgeScrollingSize) {
+                y = -1f;
+            }
+        }
+
         Vector3 moveDir = new Vector3(x, y, 0f).normalized;
 
         float moveSpeed = 30f;
         transform.position += moveDir * moveSpeed * Time.deltaTime;
+
+        
+
+        float xClamp = Mathf.Clamp(transform.position.x, mapCollider.bounds.min.x + orthographicSize * cinemachineVirtualCamera.m_Lens.Aspect, mapCollider.bounds.max.x - orthographicSize * cinemachineVirtualCamera.m_Lens.Aspect);
+        float yClamp = Mathf.Clamp(transform.position.y, mapCollider.bounds.min.y + orthographicSize, mapCollider.bounds.max.y - orthographicSize);
+        transform.position = new Vector3(xClamp, yClamp, transform.position.z);
     }
 
     private void HandleZoom() {
@@ -49,4 +88,6 @@ public class CameraHandler : MonoBehaviour {
 
         cinemachineVirtualCamera.m_Lens.OrthographicSize = orthographicSize;
     }
+
+    
 }

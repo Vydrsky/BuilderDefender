@@ -12,7 +12,7 @@ public class BuildingRepairButton : MonoBehaviour {
         healthSystem = transform.GetComponentInParent<HealthSystem>();
         transform.Find("button").GetComponent<Button>().onClick.AddListener(() => {
             int missingHealth = healthSystem.HealthAmountMax - healthSystem.HealthAmount;
-            int repairCost = missingHealth / 2;
+            int repairCost = missingHealth / 5;
 
             ResourceAmount[] resourceAmountCost = new ResourceAmount[] {
                 new ResourceAmount { resourceType = goldResourceType,amount = repairCost}
