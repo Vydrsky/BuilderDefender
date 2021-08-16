@@ -32,7 +32,7 @@ public class EnemyWaveManager : MonoBehaviour {
         state = State.WaitingToSpawnNextWave;
         spawnPosition = spawnPositionTransformList[UnityEngine.Random.Range(0, spawnPositionTransformList.Count)].position;
         nextWaveSpawnPositionTransform.position = spawnPosition;
-        nextWaveSpawnTimer = 3f;
+        nextWaveSpawnTimer = 20f;
     }
 
     /************************ LOOPING ************************/
@@ -71,7 +71,7 @@ public class EnemyWaveManager : MonoBehaviour {
 
     private void SpawnWave() {
         
-        remainingEnemySpawnAmount = 5 + 3*(waveNumber-1);
+        remainingEnemySpawnAmount = 2 + waveNumber * (Mathf.FloorToInt((float)waveNumber/4f) + 3);
         state = State.SpawningWave;
         waveNumber++;
         OnWaveNumberChanged?.Invoke(this, EventArgs.Empty);

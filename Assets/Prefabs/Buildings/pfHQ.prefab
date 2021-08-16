@@ -334,10 +334,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5535178423004047645, guid: e77594d2783356441999ee9c32f715cf, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5535178423004047647, guid: e77594d2783356441999ee9c32f715cf, type: 3}
       propertyPath: m_Name
       value: pfBuildingRepairUI

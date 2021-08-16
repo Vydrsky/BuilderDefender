@@ -26,9 +26,7 @@ public class HealthBar : MonoBehaviour {
     
 
     /************************ LOOPING ************************/
-    private void Update() {
-        
-    }
+    
 
     /************************ METHODS ************************/
 
@@ -57,7 +55,6 @@ public class HealthBar : MonoBehaviour {
         else {
             gameObject.SetActive(true);
         }
-        gameObject.SetActive(true);
     }
 
     private void ConstructHealthBarSeparators() {

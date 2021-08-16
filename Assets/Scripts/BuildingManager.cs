@@ -54,10 +54,7 @@ public class BuildingManager : MonoBehaviour {
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.T)) {
-            Vector3 enemySprawnPosition = Utilities.GetMouseWorldPosition() + Utilities.GetRandomDirection() * 5f;
-            Enemy.Create(enemySprawnPosition);
-        }
+        
     }
 
     /************************ METHODS ************************/

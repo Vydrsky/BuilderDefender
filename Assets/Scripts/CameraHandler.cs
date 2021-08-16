@@ -35,9 +35,6 @@ public class CameraHandler : MonoBehaviour {
     private void Update() {
         HandleMovement();
         HandleZoom();
-
-        Debug.Log(mapCollider.bounds.min.x + orthographicSize / 2);
-
         
     }
 

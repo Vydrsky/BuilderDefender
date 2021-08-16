@@ -29,14 +29,14 @@ public class Building : MonoBehaviour {
 
     /************************ LOOPING ************************/
     private void Update() {
-        
+        Debug.Log(buildingRepairButton);
     }
 
     /************************ METHODS ************************/
 
     private void HealthSystem_OnDied(object sender, System.EventArgs e) {
         SoundManager.Instance.PlaySound(SoundManager.Sound.BuildingDestroyed);
-        Instantiate(Resources.Load<Transform>("pfBuildingDestroyedParticles"), transform.position, Quaternion.identity);
+        Instantiate(GameAssets.Instance.pfBuildingDestroyedParticles, transform.position, Quaternion.identity);
         CinemachineShake.Instance.ShakeCamera(10f, 0.2f);
         Destroy(gameObject);
     }
